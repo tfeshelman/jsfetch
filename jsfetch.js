@@ -123,7 +123,7 @@ console.log(`\x1b[34m%s\x1b[36m%s`, `((________)  |`, `memory|   ${outUsedMem} /
 // Uptime
 console.log(`\x1b[34m%s\x1b[37m%s`, `||_|   ||_|  |`, `uptime|   ${upTimeHour}h, ${upTimeMin}m, ${upTimeSec}s`);
 
-console.log(`\x1b[32m%s\x1b[34m%s`, `^^^^^^^^^^^`, `  '------'`);
+console.log(`\x1b[32m%s\x1b[34m%s\x1b[0m`, `^^^^^^^^^^^`, `  '------'`);
 
 
 //////////////////////
