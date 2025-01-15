@@ -86,6 +86,19 @@ for (let i in readOS) {
     }
 }
 
+if (distro.includes.toLowerCase("ubuntu")) {
+    if (fs.existsSync("/usr/share/libkubuntu")) {
+        distro = "K" + distro;
+    }
+    else if (fs.existsSync("/usr/share/xubuntu")) {
+        distro = "X" + distro;
+    }
+    else if (fs.existsSync("/usr/share/lubuntu")) {
+        distro = "L" + distro;
+    }
+    else { distro = distro; }
+}
+
 
 ////////////
 // Uptime //
