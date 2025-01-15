@@ -86,8 +86,8 @@ for (let i in readOS) {
     }
 }
 
-if (distro.includes.toLowerCase("ubuntu")) {
-    if (fs.existsSync("/usr/share/libkubuntu")) {
+if (distro.toLowerCase().includes("ubuntu")) {
+    if (fs.existsSync("/usr/share/doc/libkubuntu1")) {
         distro = "K" + distro;
     }
     else if (fs.existsSync("/usr/share/xubuntu")) {
