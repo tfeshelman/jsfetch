@@ -21,6 +21,7 @@ fi
 
 case $pkgManager in
 
+    # Debian-based
     apt)
         echo "Installing packages with apt (nodejs, npm)"
         sudo apt-get install -y nodejs npm
@@ -37,12 +38,29 @@ case $pkgManager in
         echo "Done!"
         ;;
 
+    # OpenSUSE family
     zypper)
-        echo "pkg manager is $pkgManager"
+        echo "Installing packages with zypper (nodejs, npm)"
+        sudo zypper in nodejs npm
+
+        echo "Installing pkg builder from @yao"
+        sudo npm install -g @yao-pkg/pkg
+
+        echo "Building executable..."
+        sudo pkg -t node14-linux jsfetch.js
+        sudo mv -f -v jsfetch /usr/local/bin/jsfetch
+
+        echo "Cleaning up..."
+        sudo npm uninstall -g @yao-pkg/pkg
+        echo "Done!"
         ;;
+
+    # Fedora Family
     dnf)
         echo "pkg manager is $pkgManager"
         ;;
+
+    # Arch-based, btw
     pacman)
         echo "Installing packages with pacman (nodejs, npm)"
         sudo pacman -S --noconfirm nodejs npm
@@ -59,6 +77,7 @@ case $pkgManager in
         echo "Done!"
         ;;
 
+    # Void Linux, you beautiful nerds... :)
     xbps)
         echo "Installing packages with xbps (nodejs, npm)"
         sudo xbps-install -Sy nodejs
@@ -74,6 +93,7 @@ case $pkgManager in
         sudo npm uninstall -g @yao-pkg/pkg
         echo "Done!"
         ;;
+
     *)
         echo "Unknown pkg manager"
 esac
