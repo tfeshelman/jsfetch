@@ -21,7 +21,7 @@ fi
 
 case $pkgManager in
 
-    # Debian-based
+    # Debian family
     apt)
         echo "Installing packages with apt (nodejs, npm)"
         sudo apt-get install -y nodejs npm
@@ -30,12 +30,18 @@ case $pkgManager in
         sudo npm install -g @yao-pkg/pkg
 
         echo "Building executable..."
-        sudo pkg -t node14-linux jsfetch.js
+        pkg -t node14-linux jsfetch.js
         sudo mv -f -v jsfetch /usr/local/bin/jsfetch
 
         echo "Cleaning up..."   
         sudo npm uninstall -g @yao-pkg/pkg
-        echo "Done!"
+
+        #Check if file was made and placed correctly
+        if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
+            echo "Done!"
+        else
+            echo "Something went wrong. Sorry 'bout that..."
+        fi
         ;;
 
     # OpenSUSE family
@@ -43,16 +49,23 @@ case $pkgManager in
         echo "Installing packages with zypper (nodejs, npm)"
         sudo zypper in nodejs npm
 
+
         echo "Installing pkg builder from @yao"
         sudo npm install -g @yao-pkg/pkg
 
         echo "Building executable..."
-        sudo pkg -t node14-linux jsfetch.js
+        pkg -t node14-linux jsfetch.js
         sudo mv -f -v jsfetch /usr/local/bin/jsfetch
 
         echo "Cleaning up..."
         sudo npm uninstall -g @yao-pkg/pkg
-        echo "Done!"
+
+        #Check if file was made and placed correctly
+        if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
+            echo "Done!"
+        else
+            echo "Something went wrong. Sorry 'bout that..."
+        fi
         ;;
 
     # Fedora Family
@@ -69,12 +82,18 @@ case $pkgManager in
         sudo npm install -g @yao-pkg/pkg
 
         echo "Building executable..."
-        sudo pkg -t node14-linux jsfetch.js
+        pkg -t node14-linux jsfetch.js
         sudo mv -f -v jsfetch /usr/local/bin/jsfetch
 
         echo "Cleaning up..."
         sudo npm uninstall -g @yao-pkg/pkg
-        echo "Done!"
+
+        #Check if file was made and placed correctly
+        if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
+            echo "Done!"
+        else
+            echo "Something went wrong. Sorry 'bout that..."
+        fi
         ;;
 
     # Void Linux, you beautiful nerds... :)
@@ -86,12 +105,18 @@ case $pkgManager in
         sudo npm install -g @yao-pkg/pkg
 
         echo "Building executable..."
-        sudo pkg -t node14-linux jsfetch.js
+        pkg -t node14-linux jsfetch.js
         sudo mv -f -v jsfetch /usr/local/bin/jsfetch
 
         echo "Cleaning up..."
         sudo npm uninstall -g @yao-pkg/pkg
-        echo "Done!"
+
+        #Check if file was made and placed correctly
+        if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
+            echo "Done!"
+        else
+            echo "Something went wrong. Sorry 'bout that..."
+        fi
         ;;
 
     *)
