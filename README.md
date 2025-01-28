@@ -20,9 +20,7 @@ finished.
 </p>
 
 <p><b>
-For Slackware (you beautiful nerds!)
-
-</b>
+For Slackware (you beautiful nerds!)</b><br>
 More or less the same as the others, just be sure you
 elevate to root (SlackBuilds explicitly state the use of the -l parameter
 to invoke a true login shell - keeps proper items in PATH. More info 
