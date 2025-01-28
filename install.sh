@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Find the OS and package manager
 if [ "$(cat /etc/os-release | grep -i arch | wc -l)" -gt 0 ]; then
     echo "OS: Arch-based"
     pkgManager=pacman
@@ -15,6 +16,9 @@ elif [ "$(cat /etc/os-release | grep -i debian | wc -l)" -gt 0 ]; then
 elif [ "$(cat /etc/os-release | grep -i void | wc -l)" -gt 0 ]; then
     echo "OS: Void"
     pkgManager=xbps
+elif [ "$(cat /etc/os-release | grep -i slackware | wc -l)" -gt 0 ]; then
+    echo "OS: Slackware"
+    pkgManager=installpkg
 else
     echo "Unfamiliar architecture"
 fi
@@ -36,7 +40,7 @@ case $pkgManager in
         echo "Cleaning up..."   
         sudo npm uninstall -g @yao-pkg/pkg
 
-        #Check if file was made and placed correctly
+        # Check if file was made and placed correctly
         if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
             echo "Done!"
         else
@@ -47,7 +51,7 @@ case $pkgManager in
     # OpenSUSE family
     zypper)
         echo "Installing packages with zypper (nodejs, npm)"
-        sudo zypper in nodejs npm
+        sudo zypper -n in nodejs npm
 
 
         echo "Installing pkg builder from @yao"
@@ -60,7 +64,7 @@ case $pkgManager in
         echo "Cleaning up..."
         sudo npm uninstall -g @yao-pkg/pkg
 
-        #Check if file was made and placed correctly
+        # Check if file was made and placed correctly
         if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
             echo "Done!"
         else
@@ -70,7 +74,25 @@ case $pkgManager in
 
     # Fedora Family
     dnf)
-        echo "pkg manager is $pkgManager"
+        echo "Installing packages with DNF (nodejs, npm)"
+        sudo dnf -y install nodejs npm
+
+        echo "Installing pkg builder from @yao"
+        sudo npm install -g @yao-pkg/pkg
+
+        echo "Building executable..."
+        pkg -t node14-linux jsfetch.js
+        sudo mv -f -v jsfetch /usr/local/bin/jsfetch
+
+        echo "Cleaning up..."
+        sudo npm uninstall -g @yao-pkg/pkg
+
+        # Check if file was made and placed correctly
+        if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
+            echo "Done!"
+        else
+            echo "Something went wrong. Sorry 'bout that..."
+        fi
         ;;
 
     # Arch-based, btw
@@ -88,7 +110,7 @@ case $pkgManager in
         echo "Cleaning up..."
         sudo npm uninstall -g @yao-pkg/pkg
 
-        #Check if file was made and placed correctly
+        # Check if file was made and placed correctly
         if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
             echo "Done!"
         else
@@ -111,7 +133,34 @@ case $pkgManager in
         echo "Cleaning up..."
         sudo npm uninstall -g @yao-pkg/pkg
 
-        #Check if file was made and placed correctly
+        # Check if file was made and placed correctly
+        if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
+            echo "Done!"
+        else
+            echo "Something went wrong. Sorry 'bout that..."
+        fi
+        ;;
+
+    # Slackware, you even bigger, more beautiful nerds :)
+    installpkg)
+        
+        # Check if node is installed already
+        if [ "$(whereis node | grep -i node | wc -w)" -lt 2 ]; then
+            echo "Installing packages with installpkg (nodejs, npm)"
+            ./nodejs_pull.sh
+        fi
+
+        echo "Installing pkg builder from @yao"
+        npm install -g @yao-pkg/pkg
+
+        echo "Building executable..."
+        pkg -t node14-linux jsfetch.js
+        mv -f -v jsfetch /usr/local/bin/jsfetch
+
+        echo "Cleaning up..."
+        npm uninstall -g @yao-pkg/pkg
+
+        # Check if file was made and placed correctly
         if [ "$(ls /usr/local/bin | grep -i jsfetch | wc -l)" -gt 0 ]; then
             echo "Done!"
         else
