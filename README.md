@@ -26,7 +26,7 @@ For Slackware (you beautiful nerds!)
 More or less the same as the others, just be sure you
 elevate to root (SlackBuilds explicitly state the use of the -l parameter
 to invoke a true login shell - keeps proper items in PATH. More info 
-<a href="https://slackbuilds.org/howto/"> here</a>.<br><br>
+<a href="https://slackbuilds.org/howto/"> here</a>).<br><br>
 
 <b>
 
